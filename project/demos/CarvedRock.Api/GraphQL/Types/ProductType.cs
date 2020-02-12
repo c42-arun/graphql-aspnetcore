@@ -19,7 +19,7 @@ namespace CarvedRock.Api.GraphQL.Types
             Field<ProductTypeEnumType>("Type", "The type of product");
 
             Field<ListGraphType<ProductReviewType>>("reviews",
-                resolve: (productContext) => new List<ProductReview>());
+                resolve: (productContext) => new List<ProductReview>() {new ProductReview() { Id = 1, Title = "Dummy Title", Review = "Dummy Review", ProductId = productContext.Source.Id}});
 
         }
     }

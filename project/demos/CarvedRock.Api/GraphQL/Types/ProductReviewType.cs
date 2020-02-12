@@ -10,6 +10,7 @@ namespace CarvedRock.Api.GraphQL.Types
             Field(t => t.Id);
             Field(t => t.Title);
             Field(t => t.Review);
+            Field(t => t.ProductId).Description("ID of the associated product");
         }
     }
 }
