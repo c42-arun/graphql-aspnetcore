@@ -22,5 +22,12 @@ namespace CarvedRock.Api.Repositories
 
             return reviews;
         }
+
+        public Task<ILookup<int, ProductReview>> GetLazyLookupForProducts(IEnumerable<int> productIds)
+        {
+            var reviews = _dbContext.ProductReviews.Where(r => productIds.Contains(r.ProductId)).ToList();
+
+            return Task.FromResult(reviews.ToLookup(r => r.ProductId));
+        }
     }
 }
