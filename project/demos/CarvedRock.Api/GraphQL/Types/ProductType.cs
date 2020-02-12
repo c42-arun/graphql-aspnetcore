@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using CarvedRock.Api.Data.Entities;
+using CarvedRock.Api.Repositories;
 using GraphQL.Types;
 
 namespace CarvedRock.Api.GraphQL.Types
 {
     public class ProductType: ObjectGraphType<Product>
     {
-        public ProductType()
+        public ProductType(ProductReviewRepository reviewRepository)
         {
             Field(t => t.Id);
             Field(t => t.Name).Description("The name of the product");
@@ -19,7 +20,12 @@ namespace CarvedRock.Api.GraphQL.Types
             Field<ProductTypeEnumType>("Type", "The type of product");
 
             Field<ListGraphType<ProductReviewType>>("reviews",
-                resolve: (productContext) => new List<ProductReview>() {new ProductReview() { Id = 1, Title = "Dummy Title", Review = "Dummy Review", ProductId = productContext.Source.Id}});
+                resolve: (productContext) =>
+                {
+                    var reviews = reviewRepository.GetForProduct(productContext.Source.Id);
+
+                    return reviews;
+                });
 
         }
     }
