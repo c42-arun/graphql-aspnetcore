@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CarvedRock.Api.Data;
 using CarvedRock.Api.Data.Entities;
@@ -18,6 +19,11 @@ namespace CarvedRock.Api.Repositories
         public Task<List<Product>> GetAll()
         {
             return _dbContext.Products.ToListAsync();
+        }
+
+        public Product GetOne(int id)
+        {
+            return _dbContext.Products.FirstOrDefault(p => p.Id == id);
         }
     }
 }
